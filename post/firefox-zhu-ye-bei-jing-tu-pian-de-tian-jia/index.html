@@ -1,0 +1,250 @@
+<html>
+      <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <meta name="referrer" content="never">
+        <title>Firefox主页背景图片的添加 | Blog</title>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.11.1/katex.min.css">
+        <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://CYH714-github.github.io/styles/main.css">
+          <script src="https://CYH714-github.github.io/media/scripts/mdui.min.js"></script>
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css">
+        <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Ma+Shan+Zheng&display=swap" rel="stylesheet">
+        <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+        <script src="https://CYH714-github.github.io/media/scripts/script.js"></script>
+        <script >hljs.initHighlightingOnLoad();</script>
+        
+
+    </head>
+    <body class="mdui-theme-primary-purple mdui-theme-accent-purple">
+        <header class="index-img mdui-m-b-3"  style="background-image: url(https://s2.loli.net/2022/08/04/1MJtkW3CESTfQq7.jpg);" >
+                          <button class="mdui-btn  mdui-btn-icon mdui-btn-dense mdui-color-theme-500 mdui-ripple yinying mdui-m-t-1 mdui-m-l-1" mdui-menu="{target: '#demo-attr-cascade'}"><i class="mdui-icon material-icons">&#xe5d2;</i></button>
+                <ul class="mdui-menu" id="demo-attr-cascade">
+                
+                        <li class="mdui-menu-item">
+                          <a href="/" class="mdui-ripple">首页</a>
+                        </li>
+                
+                        <li class="mdui-menu-item">
+                          <a href="https://CYH714-github.github.io/archives" class="mdui-ripple">归档</a>
+                        </li>
+                
+                      </ul>
+
+        </header>
+        <div class="mdui-container post">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                         <article class="mdui-shadow-10 mdui-p-a-2 post-list">
+                           <div class="mdui-typo-display-1 mdui-m-b-3">Firefox主页背景图片的添加</div>
+                           <a  class="index-list-biaoqian ">2022-08-04</a>
+                           <div class="mdui-typo mdui-m-t-3 post-neirong"><h1 id="firefox主页背景图片的添加">Firefox主页背景图片的添加</h1>
+<h2 id="添加流程">添加流程</h2>
+<ol>
+<li>
+<p>访问<code>about:profiles</code></p>
+</li>
+<li>
+<p>打开默认配置文件的<strong>根目录</strong></p>
+</li>
+<li>
+<p>新建一个文件夹，重命名为<code>chrome</code></p>
+</li>
+<li>
+<p>将图片放入文件夹中，重命名为<code>img.jpg</code></p>
+</li>
+<li>
+<p>新建文本文件，重命名为<code>userContent.css</code></p>
+</li>
+<li>
+<p>修改这个css文件</p>
+<pre><code class="language-css">@-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing) {
+    .top-site-button .title, .context-menu-button {
+        color: #fff !important ;
+        text-shadow: 2px 2px 2px #222 !important ;
+    }
+
+    .logo-and-wordmark {
+        display: none !important;
+    }
+
+    body {
+        --newtab-topsites-outer-card-hover:rgba(255, 255, 255, 0.4) !important;
+        --newtab-element-hover-color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    body::before {
+        content: &quot;&quot; ;
+        z-index: -1 ;
+        position: fixed ;
+        top: 0 ;
+        left: 0 ;
+        background:no-repeat url(img.jpg) center ;
+        background-size: cover ;
+        width: 100vw ;
+        height: 100vh ;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>访问<code>about:config</code>，搜索<code>toolkit.legacyUserProfileCustomizations.stylesheets</code>并将其改为 <code>true</code></p>
+</li>
+<li>
+<p>重启Firefox</p>
+</li>
+</ol>
+<h2 id="css的解释">css的解释</h2>
+<pre><code class="language-css">    .top-site-button .title, .context-menu-button {
+        color: #fff !important ;
+        text-shadow: 2px 2px 2px #222 !important ;
+    }
+</code></pre>
+<p>这一段用来将字体颜色改为白色</p>
+<pre><code class="language-css">    .logo-and-wordmark {
+        display: none !important;
+    }
+</code></pre>
+<p>这一段用来移除logo</p>
+<pre><code class="language-css">    body {
+        --newtab-topsites-outer-card-hover:rgba(255, 255, 255, 0.4) !important;
+        --newtab-element-hover-color: rgba(255, 255, 255, 0.3) !important;
+    }
+</code></pre>
+<p>这一段修改了当鼠标移动到网页图标上时显示的方框的颜色</p>
+<pre><code class="language-css">    body::before {
+        content: &quot;&quot; ;
+        z-index: -1 ;
+        position: fixed ;
+        top: 0 ;
+        left: 0 ;
+        background:radial-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.75)), no-repeat url(img.jpg) center ;
+        background-size: cover ;
+        width: 100vw ;
+        height: 100vh ;
+    }
+</code></pre>
+<p>这一段是修改背景图</p>
+<p><code>radial-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.75))</code>在图片上叠加了一个中心渐变，使其变黑。可以删除，上面的代码中已删除</p>
+</div>
+                              <div class="mdui-divider mdui-m-t-3"></div>
+                              <div class="mdui-row-xs-2 mdui-m-t-2">
+  <div class="mdui-col"> <div class="mdui-text-left"><a href="https://CYH714-github.github.io/post/markdown-ji-ben-yu-fa/">Markdown基本语法</a></div></div>
+ <div class="mdui-col"><div class="mdui-text-right "><a href="https://CYH714-github.github.io/post/guan-yu-geng-gai-bo-ke-de-tong-zhi/">关于更改博客的通知</a></div> </div>
+                                </div>
+                                <div class="mdui-divider mdui-m-t-2"></div>
+   
+ <script src="https://CYH714-github.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+
+
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                         </article>
+                 <div class="toc-container mdui-float-right">
+                <ul class="markdownIt-TOC">
+<li><a href="#firefox%E4%B8%BB%E9%A1%B5%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87%E7%9A%84%E6%B7%BB%E5%8A%A0">Firefox主页背景图片的添加</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%B5%81%E7%A8%8B">添加流程</a></li>
+<li><a href="#css%E7%9A%84%E8%A7%A3%E9%87%8A">css的解释</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+
+                        </div>
+                 </div>
+          
+        </div>
+        <script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $.viewImage({
+                    'target'  : '.post-neirong img',
+                    'exclude' : '.vsmile-icons img , .song-links-item img',
+                    'delay'   : 300
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+        <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                            
+                           
+                            	
+                        <li class="social-link"><a href="https://twitter.com/CYH714_twi" target="_blank"><i class="iconfont icon-twitter"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://github.com/CYH714-github" target="_blank"><i class="iconfont icon-github"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://www.zhihu.com/people/CYH714" target="_blank"><i class="iconfont icon-zhihu"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://www.facebook.com/chenyiheng070104" target="_blank"><i class="iconfont icon-facebook"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://www.linkedin.cn/incareer/in/%E9%80%B8%E6%81%92-%E9%99%88-ab16a0247" target="_blank"><i class="iconfont icon-linkedin"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://t.me/CYH714" target="_blank"><i class="iconfont icon-telegram"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://www.douban.com/people/242943189/?_i=9592898kB_qznG" target="_blank"><i class="iconfont icon-douban"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://www.instagram.com/chenyiheng070104/" target="_blank"><i class="iconfont icon-instagram"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2411557686&amp;site=qq&amp;menu=yes" target="_blank"><i class="iconfont icon-qq"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://weibo.com/u/7674195337" target="_blank"><i class="iconfont icon-weibo"></i></a></li>
+                         
+                           
+                            	
+                        <li class="social-link"><a href="https://www.youtube.com/channel/UCfCCUTX2W--vAziH55_UF9g" target="_blank"><i class="iconfont icon-youtube"></i></a></li>
+                         
+                           
+                      </ul>
+                    </nav>
+                  <div class="copyright">
+                      <p>Henry Chen</p>
+                  </div>
+              </footer>
+    </body>
+</html>
